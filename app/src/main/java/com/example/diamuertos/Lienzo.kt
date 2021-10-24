@@ -16,27 +16,64 @@ class Lienzo (act:MainActivity): View(act){
 
 
     var esqueX = 700f
-    val movEsque = object: CountDownTimer(2000,80){
+    var arY = 100f
+    var mov = 20
+
+
+  val movEsque = object: CountDownTimer(2000,80){
+
         override fun onTick(p0: Long) {
             //lo que ejeccuta
-            esqueX-=5
-
+            esqueX =  esqueX+mov
             invalidate()//forzamos al ondraw a volver a pintarse
 
-            if(esqueX<-500f) esqueX=2200f
-            TODO("Not yet implemented")
+            if (esqueX <0f||esqueX>700f) {
+                mov =-1*mov
+
+            }
+
+
         }
 
         override fun onFinish() {
             //aqui va el start que vuelve a ejecutar
             start()
 
-            TODO("Not yet implemented")
+
+        }
+    }
+
+
+    var incar =33
+    val movAr = object: CountDownTimer(2000,80){
+
+
+        override fun onTick(p0: Long) {
+            arY= arY+incar
+            //lo que ejeccuta
+
+            if(arY>800f|| arY<0f) {
+
+                incar =-1*incar
+            }
+
+            invalidate()//forzamos al ondraw a volver a pintarse
+
+        }
+
+
+
+        override fun onFinish() {
+            //aqui va el start que vuelve a ejecutar
+            start()
+
+
         }
     }
 
     init{
         movEsque.start()
+        movAr.start()
 
     }
     override fun onDraw(canvas: Canvas) {
@@ -87,7 +124,7 @@ class Lienzo (act:MainActivity): View(act){
         canvas.drawBitmap(tumbam,500f,1350f,paint)
         canvas.drawBitmap(tumbam,200f,1365f,paint)
         //arana
-        canvas.drawBitmap(arana,100f,850f,paint)
+        canvas.drawBitmap(arana,100f,arY,paint)
 
         canvas.drawBitmap(esqueleto,esqueX, 1150f,paint)
     }
